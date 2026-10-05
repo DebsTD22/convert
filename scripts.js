@@ -7,6 +7,8 @@ const GBP = 6.08
 const form = document.querySelector("form")
 const amount = document.getElementById("amount")
 const currency = document.getElementById("currency")
+const footer = document.querySelector("main footer")
+const description = document.getElementById("description")
 
 // Manipula o input amount para receber somente numeros
 amount.addEventListener("input", () => {
@@ -34,5 +36,25 @@ form.onsubmit = (event) => {
 
 // Converte a moeda
 function convertCurrency(amount, price, symbol) {
-    
+    try{
+        // Exibindo a cotação da moeda selecionada
+        description.textContent = `${symbol} 1 = ${formatCurrencyBRL(price)}`
+
+        // Aplica a classe que exibe o footer
+        footer.classList.add("show-result")
+    } catch (error){
+        // Remove a classe que exibe o footer
+        footer.classList.remove("show-result")
+
+        console.log(error)
+        alert("Não foi possível converter")
+    }
+}
+
+// Formata a moeda em Real Brasileiro
+function formatCurrencyBRL(value){
+    return Number(value).toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+    })
 }
